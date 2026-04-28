@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  macOS launchd 用户守护进程配置
+
+  安装方法：
+    cp extras/dev.cdbb.daemon.plist ~/Library/LaunchAgents/
+    # 将下方 /usr/local/bin/cdbb 替换为实际路径（which cdbb）
+    launchctl load ~/Library/LaunchAgents/dev.cdbb.daemon.plist
+
+  卸载方法：
+    launchctl unload ~/Library/LaunchAgents/dev.cdbb.daemon.plist
+    rm ~/Library/LaunchAgents/dev.cdbb.daemon.plist
+
+  日志位置：
+    ~/Library/Logs/cdbb/daemon.log
+    ~/Library/Logs/cdbb/daemon-error.log
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>dev.cdbb.daemon</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <!-- 替换为 `which cdbb` 的输出 -->
+        <string>/usr/local/bin/cdbb</string>
+        <string>daemon</string>
+    </array>
+
+    <!-- 崩溃后自动重启 -->
+    <key>KeepAlive</key>
+    <true/>
+
+    <!-- 登录后自动启动 -->
+    <key>RunAtLoad</key>
+    <true/>
+
+    <key>StandardOutPath</key>
+    <string>/Users/Shared/cdbb-daemon.log</string>
+
+    <key>StandardErrorPath</key>
+    <string>/Users/Shared/cdbb-daemon-error.log</string>
+
+    <!-- 蓝牙权限：macOS 13+ 需要在系统设置中手动授权终端/Python -->
+    <key>EnvironmentVariables</key>
+    <dict>
+        <!-- 可选：跳过扫描，直接连接指定地址 -->
+        <!-- <key>CDBB_ADDR</key> -->
+        <!-- <string>XX:XX:XX:XX:XX:XX</string> -->
+    </dict>
+</dict>
+</plist>

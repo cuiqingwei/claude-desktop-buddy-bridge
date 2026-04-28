@@ -1,0 +1,41 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "claude-desktop-buddy-bridge"
+version = "0.1.0"
+description = "让 M5StickC Plus 成为 Claude Code CLI 的物理审批按钮 — 无需桌面应用"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "claude-desktop-buddy-bridge contributors" }]
+requires-python = ">=3.11"
+keywords = ["claude-code", "ble", "m5stick", "hardware", "permission", "hook"]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: MacOS",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Topic :: Utilities",
+]
+dependencies = [
+    "bleak>=0.22",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "pytest-asyncio>=0.23"]
+
+[project.scripts]
+cdbb = "cdbb.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/cdbb"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
