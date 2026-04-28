@@ -257,4 +257,4 @@ BLE 线协议、固件及硬件设计均来自 Anthropic 的 [claude-desktop-bud
 
 ## License
 
-MIT
+[MIT](LICENSE)
