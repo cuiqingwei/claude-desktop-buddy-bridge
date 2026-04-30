@@ -9,3 +9,4 @@ dist/
 .pytest_cache/
 *.log
 /tmp/cdbb.sock
+uv.lock

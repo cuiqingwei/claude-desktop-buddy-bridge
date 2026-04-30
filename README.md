@@ -9,24 +9,32 @@
 ---
 
 <p align="center">
-  <img src="docs/images/img1.jpeg" width="280" alt="ai">
+  <img src="docs/images/img1.jpeg" width="230" alt="ai">
   &nbsp;&nbsp;
-  <img src="docs/images/img2.jpeg" width="280" alt="photo">
+  <img src="docs/images/img2.jpeg" width="230" alt="photo">
+  &nbsp;&nbsp;
+  <img src="docs/images/img3.jpeg" width="230" alt="ai">
 </p>
 
 Anthropic 的官方 [claude-desktop-buddy](https://github.com/anthropics/claude-desktop-buddy) 固件让 M5StickC Plus 变成 Claude 的物理审批按钮——但它只与**桌面应用**通信，CLI 用户无缘使用。
 
 **claude-desktop-buddy-bridge** 填补这个空缺：一个轻量 Python 守护进程，通过 Claude Code 原生 Hook 系统拦截工具调用，经由 BLE NUS 协议与设备通信，让你用手边的硬件按键来 approve / deny，而不是盯着终端敲 y。
 
-```
-Claude Code CLI
-    │ PermissionRequest hook
-    ▼
-cdbb daemon ──── BLE (NUS) ────► M5StickC Plus
-    │                                      │
-    │◄──────────── 按键决策 ───────────────┘
-    ▼
-Claude Code 继续执行 / 中止
+```mermaid
+flowchart TD
+    A["**Claude Code CLI**\nPermissionRequest 钩子"]
+    B["**cdbb 守护进程**"]
+    C["**M5StickC Plus**"]
+    D["**按键决策**\n批准或中止"]
+    E["**继续执行**"]
+    F["**中止任务**"]
+
+    A --> B
+    B -->|"BLE（NUS）"| C
+    C --> D
+    D -->|"决策结果"| B
+    B --> E
+    B --> F
 ```
 
 ---
